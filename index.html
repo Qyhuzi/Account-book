@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가계부</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <header>
+        <h1>가계부</h1>
+        <nav>
+            <ul id="menu">
+                <li><a href="#date-category">날짜별</a></li>
+                <li><a href="#month-category">월별</a></li>
+                <li><a href="#search-category">검색</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 날짜별 섹션 -->
+        <section id="date-category" class="page active">
+            <h2>날짜별</h2>
+            <section id="transaction-section">
+                <h3>수입/지출 추가</h3>
+                <form id="transactionForm">
+                    <input type="date" id="date">
+                    <input type="text" id="description" placeholder="항목 이름" required>
+                    <input type="number" id="amount" placeholder="금액" required>
+                    <select id="category">
+                        <option value="income">수입</option>
+                        <option value="expense">지출</option>
+                    </select>
+                    <button type="submit">추가</button>
+                </form>
+            </section>
+
+            <section id="daily-summary-section">
+                <h3>날짜별 요약</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>날짜</th>
+                            <th>총 수입</th>
+                            <th>총 지출</th>
+                            <th>잔액</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dailySummaryTable">
+                        <!-- 동적으로 생성 -->
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <section id="month-category" class="page">
+            <h2>월별</h2>
+            <section id="monthly-summary-section">
+                <h3>월별 요약</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>월</th>
+                            <th>총 수입</th>
+                            <th>총 지출</th>
+                            <th>잔액</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthlySummaryTable">
+                        <!-- 동적으로 생성 -->
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <section id="search-category" class="page">
+            <h2>검색</h2>
+            <section id="filter-section">
+                <h3>필터</h3>
+                <form id="filterForm">
+                    <label>
+                        시작 날짜:
+                        <input type="date" id="startDate">
+                    </label>
+                    <label>
+                        종료 날짜:
+                        <input type="date" id="endDate">
+                    </label>
+                    <label>
+                        카테고리:
+                        <select id="filterCategory">
+                            <option value="">전체</option>
+                            <option value="income">수입</option>
+                            <option value="expense">지출</option>
+                        </select>
+                    </label>
+                    <label>
+                        최소 금액:
+                        <input type="number" id="minAmount" placeholder="0">
+                    </label>
+                    <button type="submit">필터 적용</button>
+                </form>
+            </section>
+
+            <section id="filter-results">
+                <h3>검색 결과</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>날짜</th>
+                            <th>총 수입</th>
+                            <th>총 지출</th>
+                            <th>잔액</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filteredSummaryTable">
+                        <!-- 동적으로 생성 -->
+                    </tbody>
+                </table>
+            </section>
+        </section>
+    </main>
+
+    <script src="script.js" defer></script>
+
+    <!-- Register Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./service-worker.js')
+                .then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch((error) => {
+                    console.error('Service Worker registration failed:', error);
+                });
+        }
+    </script>
+</body>
+</html>
